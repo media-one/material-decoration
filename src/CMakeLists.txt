@@ -3,6 +3,7 @@ find_package (KDecoration2 REQUIRED)
 find_package (Qt5 REQUIRED COMPONENTS
     Core
     Gui
+    Quick # Needed for LibTaskManager
 )
 
 find_package (KF5 REQUIRED COMPONENTS
@@ -15,7 +16,7 @@ find_package (KF5 REQUIRED COMPONENTS
     WindowSystem
 )
 
-# find_package(LibTaskManager)
+find_package(LibTaskManager REQUIRED)
 
 find_package(X11 REQUIRED)
 set_package_properties(X11 PROPERTIES DESCRIPTION "X11 libraries"
@@ -41,15 +42,15 @@ string(REGEX MATCH "\\.([^]]+)\\." KF5_MINOR_VERSION ${KF5_VERSION})
 string(REGEX REPLACE "\\." "" KF5_MINOR_VERSION ${KF5_MINOR_VERSION})
 message(STATUS "KF5 VERSION: ${KF5_VERSION} (MINOR_VERSION=${KF5_MINOR_VERSION})")
 
-# if(LibTaskManager_FOUND)
-#     # Discover LibTaskManager version
-#     string(REGEX MATCH "\\.([^]]+)\\." LibTaskManager_MINOR_VERSION ${LibTaskManager_VERSION})
-#     string(REGEX REPLACE "\\." "" LibTaskManager_MINOR_VERSION ${LibTaskManager_MINOR_VERSION})
-# else()
+if(LibTaskManager_FOUND)
+    # Discover LibTaskManager version
+    string(REGEX MATCH "\\.([^]]+)\\." LibTaskManager_MINOR_VERSION ${LibTaskManager_VERSION})
+    string(REGEX REPLACE "\\." "" LibTaskManager_MINOR_VERSION ${LibTaskManager_MINOR_VERSION})
+else()
     # Initialize to not found
     set(LibTaskManager_CURRENTMINOR_VERSION -1)
-# endif()
-# message(STATUS "LibTaskManager VERSION: ${LibTaskManager_VERSION} (MINOR_VERSION=${LibTaskManager_MINOR_VERSION})")
+endif()
+message(STATUS "LibTaskManager VERSION: ${LibTaskManager_VERSION} (MINOR_VERSION=${LibTaskManager_MINOR_VERSION})")
 
 configure_file(BuildConfig.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/BuildConfig.h)
 
@@ -77,8 +78,10 @@ add_library (materialdecoration MODULE
 target_link_libraries (materialdecoration
     PUBLIC
         dbusmenuqt
+        taskmanager # aka PW::LibTaskManager
         Qt5::Core
         Qt5::Gui
+        Qt5::Quick
         Qt5::X11Extras
         KF5::ConfigCore
         KF5::ConfigGui

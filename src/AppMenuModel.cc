@@ -43,6 +43,9 @@
 // libdbusmenuqt
 #include <dbusmenuimporter.h>
 
+// LibTaskManager
+#include <taskmanager/tasksmodel.h>
+
 
 namespace Material
 {
@@ -71,8 +74,9 @@ protected:
 };
 
 AppMenuModel::AppMenuModel(QObject *parent)
-    : QAbstractListModel(parent),
-      m_serviceWatcher(new QDBusServiceWatcher(this))
+    : QAbstractListModel(parent)
+    , m_serviceWatcher(new QDBusServiceWatcher(this))
+    , m_tasksModel(new TaskManager::TasksModel(this))
 {
     if (!KWindowSystem::isPlatformX11()) {
         return;

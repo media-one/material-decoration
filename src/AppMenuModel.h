@@ -35,6 +35,9 @@
 // KF
 #include <KWindowSystem>
 
+// LibTaskManager
+#include <taskmanager/tasksmodel.h>
+
 
 namespace Material
 {
@@ -137,6 +140,8 @@ private:
     QString m_menuObjectPath;
 
     QPointer<KDBusMenuImporter> m_importer;
+
+    TaskManager::TasksModel* m_tasksModel;
 };
 
 } // namespace Material

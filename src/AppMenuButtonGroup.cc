@@ -393,6 +393,16 @@ void AppMenuButtonGroup::trigger(int buttonIndex) {
         // xcb_ungrab_pointer( connection, XCB_TIME_CURRENT_TIME );
         //---
 
+        //--- QMenuBar styling
+        // Set QStyle::SH_Menu_Scrollable style hint.
+        // https://github.com/qt/qtbase/blob/9a1f2c2461c7e3e465cd6cb9ac9f8d3e3676c919/src/widgets/styles/qstylesheetstyle.cpp#L5412
+        actionMenu->setStyleSheet(QLatin1String("QMenu { menu-scrollable: true; }"));
+
+        // Setting the DropDown X11 property does nothing since the visual changes
+        // are done by the Breeze Qt style. However it might enable KWin animations.
+        actionMenu->setAttribute(Qt::WA_X11NetWmWindowTypeDropDownMenu);
+
+        //---
         actionMenu->installEventFilter(this);
 
         if (!KWindowSystem::isPlatformWayland()) {

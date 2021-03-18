@@ -1,5 +1,6 @@
 /******************************************************************
  * Copyright 2016 Chinmoy Ranjan Pradhan <chinmoyrp65@gmail.com>
+*  Copyright 2020 Michail Vourlakos <mvourlakos@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -21,6 +22,9 @@
 
 #pragma once
 
+// own
+#include "BuildConfig.h"
+
 // Qt
 #include <QAbstractListModel>
 #include <QAbstractNativeEventFilter>
@@ -34,6 +38,11 @@
 
 // KF
 #include <KWindowSystem>
+
+#if HAVE_Wayland
+#include <KWayland/Client/plasmashell.h>
+#include <KWayland/Client/plasmawindowmanagement.h>
+#endif
 
 
 namespace Material
@@ -94,13 +103,25 @@ signals:
     void winIdChanged();
 
 private:
+#if HAVE_Wayland
+    KWayland::Client::PlasmaWindow *windowFor(QVariant wid);
+#endif
+
+private:
     bool m_menuAvailable;
     bool m_updatePending = false;
 
     QVariant m_winId{-1};
 
+#if HAVE_X11
     //! window that its menu initialization may be delayed
     WId m_delayedMenuWindowId = 0;
+#endif
+
+#if HAVE_Wayland
+    KWayland::Client::PlasmaShell *m_waylandShell{nullptr};
+    QPointer<KWayland::Client::PlasmaWindowManagement> m_windowManagement;
+#endif
 
     QPointer<QMenu> m_menu;
 

@@ -1,6 +1,7 @@
 /******************************************************************
  * Copyright 2016 Kai Uwe Broulik <kde@privat.broulik.de>
  * Copyright 2016 Chinmoy Ranjan Pradhan <chinmoyrp65@gmail.com>
+*  Copyright 2020 Michail Vourlakos <mvourlakos@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -44,6 +45,13 @@
 #if HAVE_X11
 #include <QX11Info>
 #include <xcb/xcb.h>
+#endif
+
+#if HAVE_Wayland
+#include <KWayland/Client/connection_thread.h>
+#include <KWayland/Client/plasmashell.h>
+#include <KWayland/Client/plasmawindowmanagement.h>
+#include <KWayland/Client/registry.h>
 #endif
 
 
@@ -433,5 +441,20 @@ bool AppMenuModel::nativeEventFilter(const QByteArray &eventType, void *message,
 
     return false;
 }
+
+#if HAVE_Wayland
+KWayland::Client::PlasmaWindow *AppMenuModel::windowFor(QVariant wid)
+{
+    auto it = std::find_if(m_windowManagement->windows().constBegin(), m_windowManagement->windows().constEnd(), [&wid](KWayland::Client::PlasmaWindow * w) noexcept {
+            return w->isValid() && w->internalId() == wid.toUInt();
+    });
+
+    if (it == m_windowManagement->windows().constEnd()) {
+        return nullptr;
+    }
+
+    return *it;
+}
+#endif
 
 } // namespace Material

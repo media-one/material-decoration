@@ -95,9 +95,7 @@ AppMenuModel::AppMenuModel(QObject *parent)
 
     } else if (KWindowSystem::isPlatformWayland()) {
 #if HAVE_Wayland
-        // TODO
-        // waylandInit();
-        return;
+        waylandInit();
 #else
         // Not compiled with KWayland
         return;
@@ -151,7 +149,28 @@ void AppMenuModel::x11Init()
 void AppMenuModel::waylandInit()
 {
 #if HAVE_Wayland
-    // TODO
+    using namespace KWayland::Client;
+    auto connection = ConnectionThread::fromApplication(this);
+
+    if (!connection) {
+        return;
+    }
+
+    Registry *registry{new Registry(this)};
+    registry->create(connection);
+
+    connect(registry, &Registry::plasmaShellAnnounced, this
+            , [this, registry](quint32 name, quint32 version) {
+        m_waylandShell = registry->createPlasmaShell(name, version, this);
+    });
+
+    QObject::connect(registry, &KWayland::Client::Registry::plasmaWindowManagementAnnounced,
+                     [this, registry](quint32 name, quint32 version) {
+        m_windowManagement = registry->createPlasmaWindowManagement(name, version, this);
+    });
+
+    registry->setup();
+    connection->roundtrip();
 #endif
 }
 
@@ -290,7 +309,20 @@ void AppMenuModel::onWinIdChanged()
 
     } else if (KWindowSystem::isPlatformWayland()) {
 #if HAVE_Wayland
-        // TODO
+        auto window = windowFor(m_winId);
+
+        if (window) {
+            const QString serviceName = window->applicationMenuServiceName();
+            const QString menuObjectPath = window->applicationMenuObjectPath();
+
+            // validateApplicationMenu(objectPath, serviceName);
+
+            if (!serviceName.isEmpty() && !menuObjectPath.isEmpty()) {
+                updateApplicationMenu(serviceName, menuObjectPath);
+                return;
+            }
+
+        }
 #endif
     }
 }
@@ -446,7 +478,8 @@ bool AppMenuModel::nativeEventFilter(const QByteArray &eventType, void *message,
 KWayland::Client::PlasmaWindow *AppMenuModel::windowFor(QVariant wid)
 {
     auto it = std::find_if(m_windowManagement->windows().constBegin(), m_windowManagement->windows().constEnd(), [&wid](KWayland::Client::PlasmaWindow * w) noexcept {
-            return w->isValid() && w->internalId() == wid.toUInt();
+        // return w->isValid() && w->internalId() == wid.toUInt();
+        return w->isValid() && w->title() == wid.toString();
     });
 
     if (it == m_windowManagement->windows().constEnd()) {

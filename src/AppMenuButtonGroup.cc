@@ -320,7 +320,12 @@ void AppMenuButtonGroup::updateAppMenuModel()
 #endif
         } else if (KWindowSystem::isPlatformWayland()) {
 #if HAVE_Wayland
-            // TODO
+            const QString windowTitle = decoratedClient->caption();
+            if (!windowTitle.isEmpty()) {
+                initAppMenuModel();
+                m_appMenuModel->setWinId(windowTitle);
+                // qCDebug(category) << "AppMenuModel" << m_appMenuModel;
+            }
 #endif
         }
     }

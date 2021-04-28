@@ -94,6 +94,9 @@ private Q_SLOTS:
     void onWinIdChanged();
     void onX11WindowChanged(WId id);
     void onX11WindowRemoved(WId id);
+#if HAVE_Wayland
+    void onWaylandActiveWindowChanged();
+#endif
 
     void update();
 

@@ -250,6 +250,12 @@ void Decoration::init()
     connect(decoratedClient, &KDecoration2::DecoratedClient::activeChanged,
             this, repaintTitleBar);
 
+
+    connect(decoratedClient, &KDecoration2::DecoratedClient::activeChanged,
+            [this, decoratedClient](){
+        qCDebug(category) << this << "active" << decoratedClient->isActive();
+    });
+
     updateBorders();
     updateResizeBorders();
     updateTitleBar();

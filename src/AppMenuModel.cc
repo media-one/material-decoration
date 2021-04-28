@@ -167,6 +167,9 @@ void AppMenuModel::waylandInit()
     QObject::connect(registry, &KWayland::Client::Registry::plasmaWindowManagementAnnounced,
                      [this, registry](quint32 name, quint32 version) {
         m_windowManagement = registry->createPlasmaWindowManagement(name, version, this);
+
+        QObject::connect(m_windowManagement, &KWayland::Client::PlasmaWindowManagement::activeWindowChanged,
+                        this, &AppMenuModel::onWaylandActiveWindowChanged);
     });
 
     registry->setup();
@@ -341,6 +344,16 @@ void AppMenuModel::onX11WindowRemoved(WId id)
     }
 }
 
+void AppMenuModel::onWaylandActiveWindowChanged()
+{
+    auto w = m_windowManagement->activeWindow();
+    if (w && w->isValid()) {
+        qCDebug(category) << this << "active" << w << w->uuid();
+    } else {
+        qCDebug(category) << this << "noactive";
+    }
+}
+
 QHash<int, QByteArray> AppMenuModel::roleNames() const
 {
     QHash<int, QByteArray> roleNames;
@@ -479,7 +492,8 @@ KWayland::Client::PlasmaWindow *AppMenuModel::windowFor(QVariant wid)
 {
     auto it = std::find_if(m_windowManagement->windows().constBegin(), m_windowManagement->windows().constEnd(), [&wid](KWayland::Client::PlasmaWindow * w) noexcept {
         // return w->isValid() && w->internalId() == wid.toUInt();
-        return w->isValid() && w->title() == wid.toString();
+        // return w->isValid() && w->title() == wid.toString();
+        return w->isValid() && w->uuid() == wid.toString();
     });
 
     if (it == m_windowManagement->windows().constEnd()) {

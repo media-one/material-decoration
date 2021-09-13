@@ -68,6 +68,7 @@ set (decoration_SRCS
     TextButton.cc
     ConfigurationModule.cc
     plugin.cc
+	InternalSettingsSchema.kcfg
 )
 
 kconfig_add_kcfg_files(decoration_SRCS

@@ -33,13 +33,13 @@
             <default>1.0</default>
         </entry>
         <entry name="ActiveLightness" type="Double">
-            <default>1.0</default>
+			<default>0.97</default>
         </entry>
         <entry name="InactiveOpacity" type="Double">
             <default>1.0</default>
         </entry>
         <entry name="InactiveLightness" type="Double">
-            <default>1.0</default>
+			<default>0.97</default>
         </entry>
 
         <!-- menu -->

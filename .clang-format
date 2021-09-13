@@ -1,115 +1,91 @@
----
-Language:        Cpp
-# BasedOnStyle:  WebKit
+# The extra indent or outdent of access modifiers
 AccessModifierOffset: -4
-AlignAfterOpenBracket: DontAlign
-AlignConsecutiveAssignments: false
-AlignConsecutiveDeclarations: false
-AlignEscapedNewlines: Right
-AlignOperands:   false
-AlignTrailingComments: true
-AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
-AlwaysBreakAfterReturnType: None
-AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: false
-BinPackArguments: true
-BinPackParameters: true
-BraceWrapping:
-  AfterClass:      false
-  AfterControlStatement: false
-  AfterEnum:       false
-  AfterFunction:   true
-  AfterNamespace:  false
-  AfterObjCDeclaration: false
-  AfterStruct:     false
-  AfterUnion:      false
-  AfterExternBlock: false
-  BeforeCatch:     false
-  BeforeElse:      false
-  IndentBraces:    false
-  SplitEmptyFunction: true
-  SplitEmptyRecord: true
-  SplitEmptyNamespace: true
-BreakBeforeBinaryOperators: All
-BreakBeforeBraces: WebKit
-BreakBeforeInheritanceComma: false
-BreakBeforeTernaryOperators: true
-BreakConstructorInitializersBeforeComma: false
-BreakConstructorInitializers: BeforeComma
-BreakAfterJavaFieldAnnotations: false
-BreakStringLiterals: true
-ColumnLimit:     0
-CommentPragmas:  '^ IWYU pragma:'
-CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 4
-ContinuationIndentWidth: 4
-Cpp11BracedListStyle: false
-DerivePointerAlignment: false
-DisableFormat:   false
-ExperimentalAutoDetectBinPacking: false
-FixNamespaceComments: false
-ForEachMacros:
-  - foreach
-  - Q_FOREACH
-  - BOOST_FOREACH
-IncludeBlocks:   Preserve
-IncludeCategories:
-  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
-    Priority:        2
-  - Regex:           '^(<|"(gtest|gmock|isl|json)/)'
-    Priority:        3
-  - Regex:           '.*'
-    Priority:        1
-IncludeIsMainRegex: '(Test)?$'
-IndentCaseLabels: false
-IndentPPDirectives: None
-IndentWidth:     4
-IndentWrappedFunctionNames: false
-JavaScriptQuotes: Leave
-JavaScriptWrapImports: true
-KeepEmptyLinesAtTheStartOfBlocks: false
-MacroBlockBegin: ''
-MacroBlockEnd:   ''
-MaxEmptyLinesToKeep: 1
-NamespaceIndentation: Inner
-ObjCBlockIndentWidth: 4
-ObjCSpaceAfterProperty: true
-ObjCSpaceBeforeProtocolList: true
-PenaltyBreakAssignment: 2
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
-PenaltyBreakString: 1000
-PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 60
-PointerAlignment: Left
-RawStringFormats:
-  - Delimiter:       pb
-    Language:        TextProto
-    BasedOnStyle:    google
-ReflowComments:  true
-SortIncludes:    true
-SortUsingDeclarations: true
-SpaceAfterCStyleCast: false
-SpaceAfterTemplateKeyword: true
-SpaceBeforeAssignmentOperators: true
-SpaceBeforeParens: ControlStatements
-SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 1
-SpacesInAngles:  false
-SpacesInContainerLiterals: true
-SpacesInCStyleCastParentheses: false
-SpacesInParentheses: false
-SpacesInSquareBrackets: false
-Standard:        Cpp11
-TabWidth:        8
-UseTab:          Never
-...
 
+# Align parameters on the open bracket
+AlignAfterOpenBracket: Align
+
+# Disallows contracting simple braced statements to a single line
+AllowShortBlocksOnASingleLine: 'false'
+
+# Short case labels wont't be contracted to a single line
+AllowShortCaseLabelsOnASingleLine: 'false'
+
+# Merge all inline functions fitting on a single line
+AllowShortFunctionsOnASingleLine: 'Inline'
+
+# If (a) return; cannot be put on a single line
+AllowShortIfStatementsOnASingleLine: 'false'
+
+# While (true) continue; cannot be put on a single line
+AllowShortLoopsOnASingleLine: 'false'
+
+# Break after the template<...> of a template declaration.
+AlwaysBreakTemplateDeclarations: 'true'
+
+# Configure each individual brace in BraceWrapping
+BreakBeforeBraces: 'Custom'
+
+# Control of individual brace wrapping cases
+BraceWrapping: {
+    AfterClass: 'true'
+    AfterControlStatement: 'false'
+    AfterEnum : 'true'
+    AfterFunction : 'true'
+    AfterNamespace : 'true'
+    AfterStruct : 'true'
+    AfterUnion : 'true'
+    BeforeCatch : 'false'
+    BeforeElse : 'false'
+    IndentBraces : 'false'
+}
+
+# The constructor initializers style to use.
+BreakConstructorInitializersBeforeComma: 'true'
+
+# The column limit
+ColumnLimit: '100'
+
+# TabWidth (unsigned)
+# The number of columns used for tab stops.
+TabWidth: 4
+
+# IndentWidth (unsigned)
+# The number of columns to use for indentation.
+IndentWidth: 4
+
+# UseTab (UseTabStyle)
+# The way to use tab characters in the resulting file.
+# Possible values:
+#   UT_Never (in configuration: Never) Never use tab.
+#   UT_ForIndentation (in configuration: ForIndentation) Use tabs only for indentation.
+#   UT_Always (in configuration: Always) Use tabs whenever we need to fill whitespace that spans at least from one tab stop to the next one.
+UseTab: Always
+
+# Targeted language
+Language: Cpp
+
+# No indentation for namespaces.
+NamespaceIndentation: None
+
+# Pointer is aligned to right side
+PointerAlignment: Right
+
+# High penalty to avoid line break just after return type
+PenaltyReturnTypeOnItsOwnLine: 10000
+
+# Treat 'catch' BDD macros as control instructions
+ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH, GIVEN, WHEN, AND_WHEN, THEN, AND_THEN,
+    SECTION ]
+
+SortIncludes: 'true'
+
+IncludeCategories:
+  - Regex: '^<'
+    Priority: 1
+  - Regex: '^"'
+    Priority: 99
+
+ReflowComments: 'true'
+AlignTrailingComments: 'true'
+
+# $Id$

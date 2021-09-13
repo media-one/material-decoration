@@ -899,32 +899,48 @@ void Decoration::paintFrameBackground(QPainter *painter, const QRect &repaintReg
     painter->restore();
 }
 
+QColor Decoration::adjustedColor(KDecoration2::ColorRole role) const
+{
+
+	KDecoration2::ColorGroup group;
+	qreal opacity;
+	qreal lightness;
+
+	const auto *decoratedClient = client().toStrongRef().data();
+	if (decoratedClient->isActive()) {
+		group = KDecoration2::ColorGroup::Active;
+		opacity = m_internalSettings->activeOpacity();
+		lightness = m_internalSettings->activeLightness();
+	} else {
+		group = KDecoration2::ColorGroup::Inactive;
+		opacity = m_internalSettings->inactiveOpacity();
+		lightness = m_internalSettings->inactiveLightness();
+	}
+
+	QColor color = decoratedClient->color(group, role);
+	if(opacity != 1.0) {
+		color.setAlphaF(opacity);
+	}
+	if(lightness != 1.0) {
+		lightness = color.lightness() * lightness;
+		if(lightness < 0)
+			lightness = 0.0;
+		if(lightness > 255.0)
+			lightness = 255.0;
+		color.setHsl(color.hueF(), color.saturationF(), lightness);
+	}
+
+	return color;
+}
+
 QColor Decoration::borderColor() const
 {
-    const auto *decoratedClient = client().toStrongRef().data();
-    const auto group = decoratedClient->isActive()
-        ? KDecoration2::ColorGroup::Active
-        : KDecoration2::ColorGroup::Inactive;
-    const qreal opacity = decoratedClient->isActive()
-        ? m_internalSettings->activeOpacity()
-        : m_internalSettings->inactiveOpacity();
-    QColor color = decoratedClient->color(group, KDecoration2::ColorRole::Frame);
-    color.setAlphaF(opacity);
-    return color;
+	return adjustedColor(KDecoration2::ColorRole::Frame);
 }
 
 QColor Decoration::titleBarBackgroundColor() const
 {
-    const auto *decoratedClient = client().toStrongRef().data();
-    const auto group = decoratedClient->isActive()
-        ? KDecoration2::ColorGroup::Active
-        : KDecoration2::ColorGroup::Inactive;
-    const qreal opacity = decoratedClient->isActive()
-        ? m_internalSettings->activeOpacity()
-        : m_internalSettings->inactiveOpacity();
-    QColor color = decoratedClient->color(group, KDecoration2::ColorRole::TitleBar);
-    color.setAlphaF(opacity);
-    return color;
+	return adjustedColor(KDecoration2::ColorRole::TitleBar);
 }
 
 QColor Decoration::titleBarForegroundColor() const

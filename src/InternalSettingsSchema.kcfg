@@ -30,10 +30,16 @@
 
         <!-- opacity -->
         <entry name="ActiveOpacity" type="Double">
-            <default>0.75</default>
+            <default>1.0</default>
+        </entry>
+        <entry name="ActiveLightness" type="Double">
+            <default>1.0</default>
         </entry>
         <entry name="InactiveOpacity" type="Double">
-            <default>0.85</default>
+            <default>1.0</default>
+        </entry>
+        <entry name="InactiveLightness" type="Double">
+            <default>1.0</default>
         </entry>
 
         <!-- menu -->

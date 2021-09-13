@@ -37,9 +37,11 @@ private:
 
     int m_titleAlignment;
     int m_buttonSize;
-    double m_activeOpacity;
-    double m_inactiveOpacity;
-    bool m_menuAlwaysShow;
+	double m_activeOpacity;
+	double m_activeLightness;
+	double m_inactiveOpacity;
+	double m_inactiveLightness;
+	bool m_menuAlwaysShow;
     bool m_animationsEnabled;
     int m_animationsDuration;
     int m_shadowSize;

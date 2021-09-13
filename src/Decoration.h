@@ -114,8 +114,9 @@ private:
     bool dragMoveTick(const QPoint pos);
     void sendMoveEvent(const QPoint pos);
 
-    QColor borderColor() const;
-    QColor titleBarBackgroundColor() const;
+	QColor adjustedColor(KDecoration2::ColorRole role) const;
+	QColor borderColor() const;
+	QColor titleBarBackgroundColor() const;
     QColor titleBarForegroundColor() const;
 
     void paintFrameBackground(QPainter *painter, const QRect &repaintRegion) const;

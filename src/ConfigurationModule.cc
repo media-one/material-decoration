@@ -100,19 +100,33 @@ void ConfigurationModule::init()
     buttonSizes->setObjectName(QStringLiteral("kcfg_ButtonSize"));
     generalForm->addRow(i18nd("breeze_kwin_deco", "B&utton size:"), buttonSizes);
 
-    QDoubleSpinBox *activeOpacity = new QDoubleSpinBox(generalTab);
-    activeOpacity->setMinimum(0.0);
-    activeOpacity->setMaximum(1.0);
-    activeOpacity->setSingleStep(0.05);
-    activeOpacity->setObjectName(QStringLiteral("kcfg_ActiveOpacity"));
-    generalForm->addRow(i18n("Active Opacity:"), activeOpacity);
+	QDoubleSpinBox *activeOpacity = new QDoubleSpinBox(generalTab);
+	activeOpacity->setMinimum(0.0);
+	activeOpacity->setMaximum(1.0);
+	activeOpacity->setSingleStep(0.05);
+	activeOpacity->setObjectName(QStringLiteral("kcfg_ActiveOpacity"));
+	generalForm->addRow(i18n("Active opacity:"), activeOpacity);
 
-    QDoubleSpinBox *inactiveOpacity = new QDoubleSpinBox(generalTab);
+	QDoubleSpinBox *activeLightness = new QDoubleSpinBox(generalTab);
+	activeLightness->setMinimum(0.0);
+	activeLightness->setMaximum(2.0);
+	activeLightness->setSingleStep(0.1);
+	activeLightness->setObjectName(QStringLiteral("kcfg_ActiveLightness"));
+	generalForm->addRow(i18n("Active lightness:"), activeLightness);
+
+	QDoubleSpinBox *inactiveOpacity = new QDoubleSpinBox(generalTab);
     inactiveOpacity->setMinimum(0.0);
     inactiveOpacity->setMaximum(1.0);
     inactiveOpacity->setSingleStep(0.05);
     inactiveOpacity->setObjectName(QStringLiteral("kcfg_InactiveOpacity"));
-    generalForm->addRow(i18n("Inactive Opacity:"), inactiveOpacity);
+	generalForm->addRow(i18n("Inactive opacity:"), inactiveOpacity);
+
+	QDoubleSpinBox *inactiveLightness = new QDoubleSpinBox(generalTab);
+	inactiveLightness->setMinimum(0.0);
+	inactiveLightness->setMaximum(2.0);
+	inactiveLightness->setSingleStep(0.1);
+	inactiveLightness->setObjectName(QStringLiteral("kcfg_InactiveLightness"));
+	generalForm->addRow(i18n("Inactive lightness:"), inactiveLightness);
 
 
     //--- Menu
@@ -203,19 +217,31 @@ void ConfigurationModule::init()
         InternalSettings::ButtonDefault,
         QStringLiteral("ButtonSize")
     );
-    skel->addItemDouble(
-        QStringLiteral("ActiveOpacity"),
-        m_activeOpacity,
-        0.75,
-        QStringLiteral("ActiveOpacity")
-    );
-    skel->addItemDouble(
+	skel->addItemDouble(
+		QStringLiteral("ActiveOpacity"),
+		m_activeOpacity,
+		1.0,
+		QStringLiteral("ActiveOpacity")
+	);
+	skel->addItemDouble(
+		QStringLiteral("ActiveLightness"),
+		m_activeLightness,
+		1.0,
+		QStringLiteral("ActiveLightness")
+	);
+	skel->addItemDouble(
         QStringLiteral("InactiveOpacity"),
         m_inactiveOpacity,
-        0.85,
+		1.0,
         QStringLiteral("InactiveOpacity")
     );
-    skel->addItemBool(
+	skel->addItemDouble(
+		QStringLiteral("InactiveLightness"),
+		m_inactiveLightness,
+		1.0,
+		QStringLiteral("InactiveLightness")
+	);
+	skel->addItemBool(
         QStringLiteral("MenuAlwaysShow"),
         m_menuAlwaysShow,
         true,
@@ -236,7 +262,7 @@ void ConfigurationModule::init()
     skel->addItemInt(
         QStringLiteral("ShadowSize"),
         m_shadowSize,
-        InternalSettings::ShadowVeryLarge,
+		InternalSettings::ShadowMedium,
         QStringLiteral("ShadowSize")
     );
     skel->addItemInt(

@@ -28,6 +28,7 @@
 *.qbs.user.*
 *.json.user
 *.json.user.*
+*.txt.user
 *.ex4
 *.ex5
 *.autosave

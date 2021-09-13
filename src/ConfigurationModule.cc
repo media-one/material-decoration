@@ -123,12 +123,12 @@ void ConfigurationModule::init()
 
     QLabel *menuLabel = new QLabel(menuTab);
     menuLabel->setText(i18n("To enable the Locally Integrated Menus in the titlebar:\nSystem Settings > Window Decorations > Titlebar Buttons Tab\nDrag the 'Application Menu' button to bar."));
-    menuForm->addRow(QStringLiteral(""), menuLabel);
+	menuForm->addRow(QLatin1String(), menuLabel);
 
     QRadioButton *menuAlwaysShow = new QRadioButton(menuTab);
     menuAlwaysShow->setText(i18n("Always Show Menu"));
     menuAlwaysShow->setObjectName(QStringLiteral("kcfg_MenuAlwaysShow"));
-    menuForm->addRow(QStringLiteral(""), menuAlwaysShow);
+	menuForm->addRow(QLatin1String(), menuAlwaysShow);
 
     // Since there's no easy way to bind this to !MenuAlwaysShow, we
     // workaround this by marking the button as checked on init.
@@ -138,7 +138,7 @@ void ConfigurationModule::init()
     QRadioButton *menuRevealOnHover = new QRadioButton(menuTab);
     menuRevealOnHover->setText(i18n("Reveal Menu on Hover"));
     menuRevealOnHover->setChecked(true);
-    menuForm->addRow(QStringLiteral(""), menuRevealOnHover);
+	menuForm->addRow(QLatin1String(), menuRevealOnHover);
 
     QButtonGroup *menuAlwaysShowGroup = new QButtonGroup(menuTab);
     menuAlwaysShowGroup->addButton(menuAlwaysShow);
@@ -154,7 +154,7 @@ void ConfigurationModule::init()
     QCheckBox *animationsEnabled = new QCheckBox(animationsTab);
     animationsEnabled->setText(i18nd("breeze_kwin_deco", "Enable animations"));
     animationsEnabled->setObjectName(QStringLiteral("kcfg_AnimationsEnabled"));
-    animationsForm->addRow(QStringLiteral(""), animationsEnabled);
+	animationsForm->addRow(QLatin1String(), animationsEnabled);
 
     QSpinBox *animationsDuration = new QSpinBox(animationsTab);
     animationsDuration->setMinimum(0);

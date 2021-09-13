@@ -4,7 +4,7 @@
 #
 # Module Name:
 #
-#   ProtonDevel/.gitignore
+#   ProtonDevel/.gitattributes
 #
 # Author:
 #
@@ -22,15 +22,18 @@
 #   This file is the part of the Proton Trade Environment project.
 #
 
-*.pro.user
-*.pro.user.*
-*.qbs.user
-*.qbs.user.*
-*.json.user
-*.json.user.*
-*.ex4
-*.ex5
-*.autosave
-*.sbackup
+*.hpp ident
+*.h ident
+*.cpp ident
+*.cc ident
+*.c ident
+*.mqh ident
+*.mq4 ident
+*.mq5 ident
+*.qbs ident
+*.js ident
+*.pro ident
+*.pri ident
+*.sh ident
 
 # $Id$

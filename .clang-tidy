@@ -1,0 +1,52 @@
+#
+# Proton Trade Environment Project.
+# Copyright (c) 2013-2020 Mastertrade.io Ltd.
+#
+# Module Name:
+#
+#   ProtonDevel/.clang-tidy
+#
+# Author:
+#
+#   Milton Friedman <mastertrade.io@protonmail.com>
+#
+# Copyright Notice:
+#
+#   All rights reserved. All information contained herein is proprietary
+#   and confidential to Mastertrade.io Ltd. Any use, reproduction,
+#   or disclosure without the written permission of Mastertrade.io Ltd
+#   is prohibited.
+#
+# Abstract:
+#
+#   This file is the part of the Proton Trade Environment project.
+#
+
+Checks:          'clang-diagnostic-*,clang-analyzer-*,readability-inconsistent-declaration-parameter-name,readability-braces-around-statements,cert-*,misc-macro-parentheses'
+WarningsAsErrors: 'readability-braces-around-statements,misc-macro-parentheses'
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+User:            damir
+CheckOptions:    
+  - key:             google-readability-braces-around-statements.ShortStatementLines
+    value:           '1'
+  - key:             google-readability-function-size.StatementThreshold
+    value:           '800'
+  - key:             google-readability-namespace-comments.ShortNamespaceLines
+    value:           '10'
+  - key:             google-readability-namespace-comments.SpacesBeforeComments
+    value:           '2'
+  - key:             modernize-loop-convert.MaxCopySize
+    value:           '16'
+  - key:             modernize-loop-convert.MinConfidence
+    value:           reasonable
+  - key:             modernize-loop-convert.NamingStyle
+    value:           CamelCase
+  - key:             modernize-pass-by-value.IncludeStyle
+    value:           llvm
+  - key:             modernize-replace-auto-ptr.IncludeStyle
+    value:           llvm
+  - key:             modernize-use-nullptr.NullMacros
+    value:           'NULL'
+
+# $Id$

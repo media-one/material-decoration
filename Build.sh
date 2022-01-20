@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 SOURCE=$PWD
 DESTIN=$(dirname "$SOURCE")/build-$(basename "$SOURCE")-host
 
